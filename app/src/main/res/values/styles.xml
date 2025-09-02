@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextHeader1" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">@color/blue_regular</item>
+    </style>
+
+    <style name="TextTopBar" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+
+    <style name="BaseButton" parent="TextAppearance.AppCompat">
+        <item name="android:background">@drawable/color_btn</item>
+        <item name="android:layout_width">281dp</item>
+        <item name="android:layout_height">46dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+
+    <style name="disableButton" parent="BaseButton">
+        <item name="android:background">@drawable/button</item>
+    </style>
+
+    <style name="exitButton" parent="BaseButton">
+        <item name="android:background">@drawable/button_exit</item>
+    </style>
+
+
+    <style name="BaseEditText" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">281dp</item>
+        <item name="android:layout_height">46dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:background">@drawable/pole</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColorHint">@color/blue_regular_hint</item>
+    </style>
+
+</resources>

@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Голос Онлайн</string>
+    <string name="email">email</string>
+    <string name="sign_in">Вход</string>
+    <string name="sign_up">Регистрация</string>
+    <string name="password">password</string>
+    <string name="position">должность</string>
+    <string name="surname">фамилия</string>
+    <string name="name">имя</string>
+    <string name="sign_up_btp">Зарегистрироваться</string>
+    <string name="Tests">Тесты</string>
+    <string name="exit">Выход</string>
+    <string name="profile">Профиль</string>
+    <string name="edit_profile">Изменить профиль</string>
+    <string name="change_password">Сменить пароль</string>
+    <string name="my_golosovania">Мои голосования</string>
+    <string name="text_my_name">Буренко Иван</string>
+    <string name="search">Поиск</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="old_password">Старый пароль</string>
+    <string name="save_changes">Сохранить изменения</string>
+</resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top"
+    android:paddingHorizontal="20dp"
+    android:layout_marginTop="40dp"
+    tools:context=".QuestionFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Сколько ног у сервера?"
+            android:textSize="18sp"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/blue_acsent"/>
+
+        <RadioGroup
+            android:id="@+id/answers_group"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue_acsent"
+                android:text="1 нога у сервера"
+                android:buttonTint="@color/blue_acsent"
+                android:textSize="18sp"
+                android:fontFamily="@font/montserrat"/>
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue_acsent"
+                android:buttonTint="@color/blue_acsent"
+                android:text="2 нога у сервера"
+                android:textSize="18sp"
+                android:fontFamily="@font/montserrat"/>
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue_acsent"
+                android:buttonTint="@color/blue_acsent"
+                android:text="3 нога у сервера"
+                android:textSize="18sp"
+                android:fontFamily="@font/montserrat"/>
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue_acsent"
+                android:text="У сервера не бывает ног, у него лапы"
+                android:buttonTint="@color/blue_acsent"
+                android:textSize="18sp"
+                android:fontFamily="@font/montserrat"/>
+        </RadioGroup>
+    </LinearLayout>
+
+
+</FrameLayout>
