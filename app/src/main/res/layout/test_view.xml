@@ -1,41 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/voteCard"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:orientation="horizontal"
-    android:background="@drawable/pole"
     android:layout_marginTop="10dp"
-    android:paddingVertical="8sp"
-    android:onClick="openTest"
-    android:gravity="center">
+    android:background="@drawable/pole"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="8dp">
 
     <LinearLayout
-        android:layout_width="320sp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/vote_name"
             android:layout_width="match_parent"
-            android:layout_height="20sp"
-            android:text="Разработка мобильных приложений в вузе мирэа ну как же я всё это ебал"
-            android:textSize="16sp"
-            android:textColor="@color/blue_acsent"/>
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/blue_acsent"
+            android:textSize="16sp" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/vote_time"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/vote_time"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Закрывается через: 50 часов 30 минут"
-                android:textSize="14sp"
-                android:textColor="@color/blue_regular_hint"/>
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/blue_regular_hint"
+            android:textSize="14sp" />
 
     </LinearLayout>
 
@@ -43,8 +41,7 @@
         android:id="@+id/test_is_passed"
         android:layout_width="45dp"
         android:layout_height="35dp"
-
-        android:layout_gravity="center"
-        android:src="@drawable/gal_1"/>
+        android:layout_marginStart="8dp"
+        android:src="@drawable/gal_1" />
 
 </LinearLayout>

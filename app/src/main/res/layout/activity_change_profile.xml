@@ -80,6 +80,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textEditSurname" />
 
+        <EditText
+            android:id="@+id/textEditUsername"
+            android:layout_marginTop="20dp"
+            android:hint="@string/username"
+            android:inputType="text"
+            style="@style/BaseEditText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textEditEmail" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/saveChangeProfile"
             android:layout_marginTop="42dp"
@@ -87,7 +97,7 @@
             style="@style/BaseButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textEditEmail" />
+            app:layout_constraintTop_toBottomOf="@+id/textEditUsername" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -51,6 +51,26 @@
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <EditText
+        android:id="@+id/editTextLogin"
+        android:layout_marginTop="20dp"
+        android:hint="@string/login"
+        android:inputType="text"
+        style="@style/BaseEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+
+    <EditText
+        android:id="@+id/editTextUsername"
+        android:layout_marginTop="20dp"
+        android:hint="@string/username"
+        android:inputType="text"
+        style="@style/BaseEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextLogin" />
+
+    <EditText
         android:id="@+id/editTextPassword"
         android:layout_marginTop="20dp"
         android:hint="@string/password"
@@ -59,7 +79,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextUsername" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signUpBtn"

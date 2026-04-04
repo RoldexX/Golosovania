@@ -12,44 +12,66 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
+        sessionManager = SessionManager(this)
         setContentView(binding.root)
 
-        val etLogin = binding.EmailAddress
-        val etPassword = binding.Password
-
-        binding.signInBtn.setOnClickListener {
-            val login = etLogin.text.toString()
-            val password = etPassword.text.toString()
-            if (login.isNotEmpty() && password.isNotEmpty()) {
-                loginUser(login, password)
-            } else {
-                Toast.makeText(this@LoginActivity, "Заполните все поля", Toast.LENGTH_SHORT).show()
-            }
+        if (!sessionManager.getToken().isNullOrBlank()) {
+            openGeneralScreen()
+            finish()
+            return
         }
 
+        binding.signInBtn.setOnClickListener {
+            val login = binding.EmailAddress.text.toString().trim()
+            val password = binding.Password.text.toString()
+
+            if (login.isBlank() || password.isBlank()) {
+                toast("Fill in all fields")
+            } else {
+                loginUser(login, password)
+            }
+        }
     }
 
     private fun loginUser(login: String, password: String) {
-        val call = ApiClient.authApi.login(LoginRequest(login, password))
-        call.enqueue(object : Callback<AuthResponse> {
-            override fun onResponse (call: Call<AuthResponse>, response: Response<AuthResponse>) {
-                if (response.isSuccessful) {
-                    Toast.makeText(this@LoginActivity, "Успешный вход!", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this@LoginActivity, GeneralActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(this@LoginActivity, "Ошибка входа", Toast.LENGTH_SHORT).show()
+        ApiClient.authApi(this).login(LoginRequest(login, password))
+            .enqueue(object : Callback<LoginResponse> {
+                override fun onResponse(
+                    call: Call<LoginResponse>,
+                    response: Response<LoginResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val token = response.body()?.token
+                        if (token.isNullOrBlank()) {
+                            toast("Empty token in response")
+                            return
+                        }
+
+                        sessionManager.saveToken(token)
+                        toast("Login successful")
+                        openGeneralScreen()
+                        finish()
+                    } else {
+                        toast(ApiErrorParser.message(response))
+                    }
                 }
-            }
 
-            override fun onFailure (call: Call<AuthResponse>, t: Throwable) {
-                Toast.makeText(this@LoginActivity, "Ошибка сети ${t.message}", Toast.LENGTH_SHORT).show()
-            }
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    toast("Network error: ${t.message}")
+                }
+            })
+    }
 
-        })
+    private fun openGeneralScreen() {
+        startActivity(Intent(this, GeneralActivity::class.java))
+    }
+
+    private fun toast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

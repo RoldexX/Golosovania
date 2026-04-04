@@ -12,52 +12,69 @@ import retrofit2.Response
 class RegistrationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegistrationBinding
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
+        sessionManager = SessionManager(this)
         setContentView(binding.root)
 
-        val etName = binding.name
-        val etSurname = binding.surname
-        val etEmail = binding.editTextEmail
-        val etUsername = binding.editTextEmail
-        val etLogin = binding.editTextEmail
-        val etPassword = binding.editTextPassword
-
         binding.signUpBtn.setOnClickListener {
-            val login = etLogin.text.toString()
-            val password = etPassword.text.toString()
-            val email = etEmail.text.toString()
-            val username = etUsername.text.toString()
-            val name = etName.text.toString()
-            val surname = etSurname.text.toString()
-            if (login.isNotEmpty() && password.isNotEmpty()) {
-                registerUser(login, password, email, username, name, surname)
+            val request = RegisterRequest(
+                name = binding.name.text.toString().trim(),
+                surname = binding.surname.text.toString().trim(),
+                login = binding.editTextLogin.text.toString().trim(),
+                password = binding.editTextPassword.text.toString(),
+                email = binding.editTextEmail.text.toString().trim(),
+                username = binding.editTextUsername.text.toString().trim()
+            )
+
+            if (
+                request.name.isBlank() ||
+                request.surname.isBlank() ||
+                request.login.isBlank() ||
+                request.password.isBlank() ||
+                request.email.isBlank() ||
+                request.username.isBlank()
+            ) {
+                toast("Fill in all fields")
             } else {
-                Toast.makeText(this@RegistrationActivity, "Заполните все поля", Toast.LENGTH_SHORT).show()
+                registerUser(request)
             }
         }
-
     }
 
-    private fun registerUser(login: String, password: String, email: String, username: String, name: String, surname: String) {
-        val call = ApiClient.authApi.register(RegisterRequest(login, password, email, username, name, surname))
-        call.enqueue(object : Callback<AuthResponse> {
-            override fun onResponse (call: Call<AuthResponse>, response: Response<AuthResponse>) {
-                if (response.isSuccessful) {
-                    Toast.makeText(this@RegistrationActivity, "Вы успешно зарегисрировались!", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this@RegistrationActivity, LoginActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(this@RegistrationActivity, "Ошибка регистрации", Toast.LENGTH_SHORT).show()
+    private fun registerUser(request: RegisterRequest) {
+        ApiClient.authApi(this).register(request)
+            .enqueue(object : Callback<RegisterResponse> {
+                override fun onResponse(
+                    call: Call<RegisterResponse>,
+                    response: Response<RegisterResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val token = response.body()?.token
+                        if (token.isNullOrBlank()) {
+                            toast("Empty token in response")
+                            return
+                        }
+
+                        sessionManager.saveToken(token)
+                        toast("Registration successful")
+                        startActivity(Intent(this@RegistrationActivity, GeneralActivity::class.java))
+                        finish()
+                    } else {
+                        toast(ApiErrorParser.message(response))
+                    }
                 }
-            }
 
-            override fun onFailure (call: Call<AuthResponse>, t: Throwable) {
-                Toast.makeText(this@RegistrationActivity, "Ошибка сети ${t.message}", Toast.LENGTH_SHORT).show()
-            }
+                override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                    toast("Network error: ${t.message}")
+                }
+            })
+    }
 
-        })
+    private fun toast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
