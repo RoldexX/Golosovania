@@ -32,10 +32,10 @@ class ChangePasswordActivity : AppCompatActivity() {
 
             when {
                 oldPassword.isBlank() || newPassword.isBlank() || repeatPassword.isBlank() ->
-                    toast("Fill in all fields")
+                    toast(getString(R.string.fill_all_fields))
 
                 newPassword != repeatPassword ->
-                    toast("New passwords do not match")
+                    toast(getString(R.string.new_passwords_do_not_match))
 
                 else -> updatePassword(oldPassword, newPassword)
             }
@@ -50,19 +50,19 @@ class ChangePasswordActivity : AppCompatActivity() {
                     response: Response<UpdatePasswordResponse>
                 ) {
                     if (response.isSuccessful) {
-                        toast("Password updated")
+                        toast(getString(R.string.password_updated))
                         startActivity(Intent(this@ChangePasswordActivity, ProfileActivity::class.java))
                         finish()
                     } else if (response.code() == 401) {
                         sessionManager.clearSession()
                         redirectToMain()
                     } else {
-                        toast(ApiErrorParser.message(response))
+                        toast(ApiErrorParser.message(response) { getString(R.string.request_failed, it) })
                     }
                 }
 
                 override fun onFailure(call: Call<UpdatePasswordResponse>, t: Throwable) {
-                    toast("Network error: ${t.message}")
+                    toast(getString(R.string.network_error, t.message ?: getString(R.string.request_failed, -1)))
                 }
             })
     }

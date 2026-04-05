@@ -53,22 +53,22 @@ class NotificationsActivity : AppCompatActivity() {
                         sessionManager.clearSession()
                         redirectToMain()
                     } else {
-                        toast(ApiErrorParser.message(response))
+                        toast(ApiErrorParser.message(response) { getString(R.string.request_failed, it) })
                     }
                 }
 
                 override fun onFailure(call: Call<List<NotificationResponse>>, t: Throwable) {
-                    toast("Network error: ${t.message}")
+                    toast(getString(R.string.network_error, t.message ?: getString(R.string.request_failed, -1)))
                 }
             })
     }
 
     private fun confirmDelete(notificationId: Long) {
         AlertDialog.Builder(this)
-            .setTitle("Delete notification")
-            .setMessage("Remove this notification?")
-            .setPositiveButton("Delete") { _, _ -> deleteNotification(notificationId) }
-            .setNegativeButton("Cancel", null)
+            .setTitle(R.string.delete_notification_title)
+            .setMessage(R.string.delete_notification_message)
+            .setPositiveButton(R.string.delete) { _, _ -> deleteNotification(notificationId) }
+            .setNegativeButton(R.string.cancel, null)
             .show()
     }
 
@@ -85,12 +85,12 @@ class NotificationsActivity : AppCompatActivity() {
                         sessionManager.clearSession()
                         redirectToMain()
                     } else {
-                        toast(ApiErrorParser.message(response))
+                        toast(ApiErrorParser.message(response) { getString(R.string.request_failed, it) })
                     }
                 }
 
                 override fun onFailure(call: Call<DeleteNotificationResponse>, t: Throwable) {
-                    toast("Network error: ${t.message}")
+                    toast(getString(R.string.network_error, t.message ?: getString(R.string.request_failed, -1)))
                 }
             })
     }

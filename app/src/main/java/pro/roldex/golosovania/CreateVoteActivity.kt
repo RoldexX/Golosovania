@@ -46,7 +46,7 @@ class CreateVoteActivity : AppCompatActivity() {
             )
 
             if (request.title.isBlank() || request.lastDate.isBlank() || request.choices.size < 2) {
-                toast("Title, deadline and at least two choices are required")
+                toast(getString(R.string.create_vote_validation))
             } else {
                 createVote(request)
             }
@@ -104,12 +104,12 @@ class CreateVoteActivity : AppCompatActivity() {
                         sessionManager.clearSession()
                         redirectToMain()
                     } else {
-                        toast(ApiErrorParser.message(response))
+                        toast(ApiErrorParser.message(response) { getString(R.string.request_failed, it) })
                     }
                 }
 
                 override fun onFailure(call: Call<VoteDetailsResponse>, t: Throwable) {
-                    toast("Network error: ${t.message}")
+                    toast(getString(R.string.network_error, t.message ?: getString(R.string.request_failed, -1)))
                 }
             })
     }

@@ -45,7 +45,7 @@ class NotificationsAdapter(
     class EmptyHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind() {
             val text = itemView.findViewById<TextView>(android.R.id.text1)
-            text.text = "No notifications"
+            text.text = itemView.context.getString(R.string.empty_notifications)
             text.textSize = 18f
             text.setTextColor(itemView.context.getColor(R.color.blue_regular_hint))
         }

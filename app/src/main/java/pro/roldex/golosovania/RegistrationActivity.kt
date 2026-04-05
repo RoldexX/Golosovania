@@ -38,7 +38,7 @@ class RegistrationActivity : AppCompatActivity() {
                 request.email.isBlank() ||
                 request.username.isBlank()
             ) {
-                toast("Fill in all fields")
+                toast(getString(R.string.fill_all_fields))
             } else {
                 registerUser(request)
             }
@@ -55,21 +55,21 @@ class RegistrationActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val token = response.body()?.token
                         if (token.isNullOrBlank()) {
-                            toast("Empty token in response")
+                            toast(getString(R.string.empty_token_response))
                             return
                         }
 
                         sessionManager.saveToken(token)
-                        toast("Registration successful")
+                        toast(getString(R.string.registration_successful))
                         startActivity(Intent(this@RegistrationActivity, GeneralActivity::class.java))
                         finish()
                     } else {
-                        toast(ApiErrorParser.message(response))
+                        toast(ApiErrorParser.message(response) { getString(R.string.request_failed, it) })
                     }
                 }
 
                 override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                    toast("Network error: ${t.message}")
+                    toast(getString(R.string.network_error, t.message ?: getString(R.string.request_failed, -1)))
                 }
             })
     }

@@ -24,7 +24,6 @@ class GeneralActivity : AppCompatActivity() {
     private val createVoteLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
-                screenMode = MODE_MY
                 loadVotes()
             }
         }
@@ -51,21 +50,7 @@ class GeneralActivity : AppCompatActivity() {
             startActivity(Intent(this@GeneralActivity, ProfileActivity::class.java))
         }
 
-        binding.allVotesButton.setOnClickListener {
-            if (screenMode != MODE_ALL) {
-                screenMode = MODE_ALL
-                loadVotes()
-            }
-        }
-
-        binding.myVotesButton.setOnClickListener {
-            if (screenMode != MODE_MY) {
-                screenMode = MODE_MY
-                loadVotes()
-            }
-        }
-
-        binding.createVoteButton.setOnClickListener {
+        binding.createVoteFab.setOnClickListener {
             createVoteLauncher.launch(Intent(this, CreateVoteActivity::class.java))
         }
 
@@ -99,12 +84,12 @@ class GeneralActivity : AppCompatActivity() {
                         sessionManager.clearSession()
                         redirectToMain()
                     } else {
-                        toast(ApiErrorParser.message(response))
+                        toast(ApiErrorParser.message(response) { getString(R.string.request_failed, it) })
                     }
                 }
 
                 override fun onFailure(call: Call<List<VoteSummaryResponse>>, t: Throwable) {
-                    toast("Network error: ${t.message}")
+                    toast(getString(R.string.network_error, t.message ?: getString(R.string.request_failed, -1)))
                 }
             })
         }
@@ -124,12 +109,12 @@ class GeneralActivity : AppCompatActivity() {
                         sessionManager.clearSession()
                         redirectToMain()
                     } else {
-                        toast(ApiErrorParser.message(response))
+                        toast(ApiErrorParser.message(response) { getString(R.string.request_failed, it) })
                     }
                 }
 
                 override fun onFailure(call: Call<List<VoteSummaryResponse>>, t: Throwable) {
-                    toast("Network error: ${t.message}")
+                    toast(getString(R.string.network_error, t.message ?: getString(R.string.request_failed, -1)))
                 }
             })
     }
@@ -141,9 +126,9 @@ class GeneralActivity : AppCompatActivity() {
 
     private fun renderVotes(votes: List<VoteSummaryResponse>) {
         val emptyMessage = when (screenMode) {
-            MODE_MY -> "No created votes yet"
-            MODE_PARTICIPATED -> "No participated votes yet"
-            else -> "No votes found"
+            MODE_MY -> getString(R.string.empty_created_votes)
+            MODE_PARTICIPATED -> getString(R.string.empty_participated_votes)
+            else -> getString(R.string.empty_votes)
         }
 
         val votedIdsForScreen = when (screenMode) {

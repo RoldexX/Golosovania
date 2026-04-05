@@ -28,7 +28,7 @@ class EditVoteActivity : AppCompatActivity() {
 
         voteId = intent.getLongExtra(EXTRA_VOTE_ID, -1L)
         if (voteId <= 0L) {
-            toast("Invalid vote id")
+            toast(getString(R.string.invalid_vote_id))
             finish()
             return
         }
@@ -49,7 +49,7 @@ class EditVoteActivity : AppCompatActivity() {
             )
 
             if (request.title.isBlank() || request.lastDate.isBlank()) {
-                toast("Title and deadline are required")
+                toast(getString(R.string.edit_vote_validation))
             } else {
                 updateVote(request)
             }
@@ -79,12 +79,12 @@ class EditVoteActivity : AppCompatActivity() {
                         sessionManager.clearSession()
                         redirectToMain()
                     } else {
-                        toast(ApiErrorParser.message(response))
+                        toast(ApiErrorParser.message(response) { getString(R.string.request_failed, it) })
                     }
                 }
 
                 override fun onFailure(call: Call<VoteDetailsResponse>, t: Throwable) {
-                    toast("Network error: ${t.message}")
+                    toast(getString(R.string.network_error, t.message ?: getString(R.string.request_failed, -1)))
                 }
             })
     }
@@ -140,12 +140,12 @@ class EditVoteActivity : AppCompatActivity() {
                         sessionManager.clearSession()
                         redirectToMain()
                     } else {
-                        toast(ApiErrorParser.message(response))
+                        toast(ApiErrorParser.message(response) { getString(R.string.request_failed, it) })
                     }
                 }
 
                 override fun onFailure(call: Call<VoteDetailsResponse>, t: Throwable) {
-                    toast("Network error: ${t.message}")
+                    toast(getString(R.string.network_error, t.message ?: getString(R.string.request_failed, -1)))
                 }
             })
     }

@@ -42,7 +42,7 @@ class VoteDetailsActivity : AppCompatActivity() {
         canManage = intent.getBooleanExtra(EXTRA_CAN_MANAGE, false)
         hasVoted = intent.getBooleanExtra(EXTRA_HAS_VOTED, false)
         if (voteId <= 0L) {
-            toast("Invalid vote id")
+            toast(getString(R.string.invalid_vote_id))
             finish()
             return
         }
@@ -54,7 +54,7 @@ class VoteDetailsActivity : AppCompatActivity() {
         binding.voteButton.setOnClickListener {
             val choiceId = selectedChoiceId
             if (choiceId == null) {
-                toast("Select an option")
+                toast(getString(R.string.select_option))
             } else {
                 submitVote(choiceId)
             }
@@ -76,7 +76,7 @@ class VoteDetailsActivity : AppCompatActivity() {
     }
 
     private fun shouldShowResults(): Boolean {
-        return hasVoted || isClosed
+        return hasVoted || isClosed || canManage
     }
 
     private fun applyVoteState() {
@@ -119,12 +119,12 @@ class VoteDetailsActivity : AppCompatActivity() {
                         sessionManager.clearSession()
                         redirectToMain()
                     } else {
-                        toast(ApiErrorParser.message(response))
+                        toast(ApiErrorParser.message(response) { getString(R.string.request_failed, it) })
                     }
                 }
 
                 override fun onFailure(call: Call<VoteDetailsResponse>, t: Throwable) {
-                    toast("Network error: ${t.message}")
+                    toast(getString(R.string.network_error, t.message ?: getString(R.string.request_failed, -1)))
                 }
             })
     }
@@ -162,7 +162,7 @@ class VoteDetailsActivity : AppCompatActivity() {
                     response: Response<VoteActionResponse>
                 ) {
                     if (response.isSuccessful) {
-                        toast("Vote submitted")
+                        toast(getString(R.string.vote_submitted))
                         hasVoted = true
                         applyVoteState()
                         loadResults()
@@ -170,12 +170,12 @@ class VoteDetailsActivity : AppCompatActivity() {
                         sessionManager.clearSession()
                         redirectToMain()
                     } else {
-                        toast(ApiErrorParser.message(response))
+                        toast(ApiErrorParser.message(response) { getString(R.string.request_failed, it) })
                     }
                 }
 
                 override fun onFailure(call: Call<VoteActionResponse>, t: Throwable) {
-                    toast("Network error: ${t.message}")
+                    toast(getString(R.string.network_error, t.message ?: getString(R.string.request_failed, -1)))
                 }
             })
     }
@@ -202,7 +202,7 @@ class VoteDetailsActivity : AppCompatActivity() {
         binding.resultsContainer.removeAllViews()
 
         val totalVotesView = TextView(this).apply {
-            text = "Total votes: ${results.totalVotes}"
+            text = getString(R.string.total_votes, results.totalVotes)
             textSize = 16f
             setTextColor(getColor(R.color.blue_regular_hint))
         }
@@ -222,10 +222,10 @@ class VoteDetailsActivity : AppCompatActivity() {
 
     private fun confirmDelete() {
         AlertDialog.Builder(this)
-            .setTitle("Delete vote")
-            .setMessage("Remove this vote?")
-            .setPositiveButton("Delete") { _, _ -> deleteVote() }
-            .setNegativeButton("Cancel", null)
+            .setTitle(R.string.delete_vote_title)
+            .setMessage(R.string.delete_vote_message)
+            .setPositiveButton(R.string.delete) { _, _ -> deleteVote() }
+            .setNegativeButton(R.string.cancel, null)
             .show()
     }
 
@@ -237,18 +237,18 @@ class VoteDetailsActivity : AppCompatActivity() {
                     response: Response<DeleteVoteResponse>
                 ) {
                     if (response.isSuccessful) {
-                        toast("Vote deleted")
+                        toast(getString(R.string.vote_deleted))
                         finish()
                     } else if (response.code() == 401) {
                         sessionManager.clearSession()
                         redirectToMain()
                     } else {
-                        toast(ApiErrorParser.message(response))
+                        toast(ApiErrorParser.message(response) { getString(R.string.request_failed, it) })
                     }
                 }
 
                 override fun onFailure(call: Call<DeleteVoteResponse>, t: Throwable) {
-                    toast("Network error: ${t.message}")
+                    toast(getString(R.string.network_error, t.message ?: getString(R.string.request_failed, -1)))
                 }
             })
     }

@@ -31,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.Password.text.toString()
 
             if (login.isBlank() || password.isBlank()) {
-                toast("Fill in all fields")
+                toast(getString(R.string.fill_all_fields))
             } else {
                 loginUser(login, password)
             }
@@ -48,21 +48,21 @@ class LoginActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val token = response.body()?.token
                         if (token.isNullOrBlank()) {
-                            toast("Empty token in response")
+                            toast(getString(R.string.empty_token_response))
                             return
                         }
 
                         sessionManager.saveToken(token)
-                        toast("Login successful")
+                        toast(getString(R.string.login_successful))
                         openGeneralScreen()
                         finish()
                     } else {
-                        toast(ApiErrorParser.message(response))
+                        toast(ApiErrorParser.message(response) { getString(R.string.request_failed, it) })
                     }
                 }
 
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    toast("Network error: ${t.message}")
+                    toast(getString(R.string.network_error, t.message ?: getString(R.string.request_failed, -1)))
                 }
             })
     }

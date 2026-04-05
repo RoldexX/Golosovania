@@ -39,7 +39,7 @@ class ChangeProfileActivity : AppCompatActivity() {
                 request.email.isBlank() ||
                 request.username.isBlank()
             ) {
-                toast("Fill in all fields")
+                toast(getString(R.string.fill_all_fields))
             } else {
                 updateProfile(request)
             }
@@ -66,12 +66,12 @@ class ChangeProfileActivity : AppCompatActivity() {
                         sessionManager.clearSession()
                         redirectToMain()
                     } else {
-                        toast(ApiErrorParser.message(response))
+                        toast(ApiErrorParser.message(response) { getString(R.string.request_failed, it) })
                     }
                 }
 
                 override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
-                    toast("Network error: ${t.message}")
+                    toast(getString(R.string.network_error, t.message ?: getString(R.string.request_failed, -1)))
                 }
             })
     }
@@ -84,19 +84,19 @@ class ChangeProfileActivity : AppCompatActivity() {
                     response: Response<UpdateUserProfileResponse>
                 ) {
                     if (response.isSuccessful) {
-                        toast("Profile updated")
+                        toast(getString(R.string.profile_updated))
                         startActivity(Intent(this@ChangeProfileActivity, ProfileActivity::class.java))
                         finish()
                     } else if (response.code() == 401) {
                         sessionManager.clearSession()
                         redirectToMain()
                     } else {
-                        toast(ApiErrorParser.message(response))
+                        toast(ApiErrorParser.message(response) { getString(R.string.request_failed, it) })
                     }
                 }
 
                 override fun onFailure(call: Call<UpdateUserProfileResponse>, t: Throwable) {
-                    toast("Network error: ${t.message}")
+                    toast(getString(R.string.network_error, t.message ?: getString(R.string.request_failed, -1)))
                 }
             })
     }

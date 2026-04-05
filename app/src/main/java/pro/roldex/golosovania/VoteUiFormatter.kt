@@ -12,11 +12,11 @@ object VoteUiFormatter {
     )
 
     fun deadlineText(lastDate: String): String {
-        val date = parse(lastDate) ?: return "Deadline: $lastDate"
+        val date = parse(lastDate) ?: return "Срок: $lastDate"
         val now = LocalDateTime.now()
 
         if (date.isBefore(now)) {
-            return "Closed"
+            return "Завершено"
         }
 
         val duration = Duration.between(now, date)
@@ -24,16 +24,17 @@ object VoteUiFormatter {
         val hours = duration.minusDays(days).toHours()
         val minutes = duration.minusDays(days).minusHours(hours).toMinutes()
 
-        return buildString {
-            append("Closes in ")
+        val parts = buildList {
             if (days > 0) {
-                append(days).append("d ")
+                add("$days д.")
             }
             if (hours > 0 || days > 0) {
-                append(hours).append("h ")
+                add("$hours ч.")
             }
-            append(minutes).append("m")
-        }
+            add("$minutes мин.")
+        }.joinToString(" ")
+
+        return "Закроется через $parts"
     }
 
     fun detailsText(lastDate: String, choicesCount: Int): String {
@@ -44,7 +45,7 @@ object VoteUiFormatter {
             lastDate
         }
 
-        return "Choices: $choicesCount | Until: $formattedDate"
+        return "Вариантов: $choicesCount | До: $formattedDate"
     }
 
     fun isClosed(lastDate: String): Boolean {
