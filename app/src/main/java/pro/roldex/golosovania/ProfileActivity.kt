@@ -67,7 +67,8 @@ class ProfileActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful) {
                         response.body()?.let { user ->
-                            binding.textView4.text = "${user.name} ${user.surname}".trim()
+                            binding.textView4.text =
+                                getString(R.string.user_full_name, user.name, user.surname).trim()
                         }
                     } else if (response.code() == 401) {
                         sessionManager.clearSession()

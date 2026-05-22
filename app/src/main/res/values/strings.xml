@@ -23,6 +23,7 @@
     <string name="save_changes">Сохранить изменения</string>
     <string name="vote">Голосовать</string>
     <string name="results">Результаты</string>
+    <string name="return_to_votes">Вернуться к голосованиям</string>
     <string name="all_votes">Все голосования</string>
     <string name="create_vote">Создать</string>
     <string name="edit_vote">Редактировать</string>
@@ -31,7 +32,7 @@
     <string name="notifications">Уведомления</string>
     <string name="delete">Удалить</string>
     <string name="vote_title_hint">Название голосования</string>
-    <string name="vote_date_hint">Срок: 2026-04-20T18:00:00</string>
+    <string name="vote_date_hint">Срок: 20.04.2026 18:00</string>
     <string name="choice_one">Вариант 1</string>
     <string name="choice_two">Вариант 2</string>
     <string name="choice_three_optional">Вариант 3 (необязательно)</string>
@@ -67,4 +68,6 @@
     <string name="hours_short">%1$d ч.</string>
     <string name="minutes_short">%1$d мин.</string>
     <string name="vote_details_summary">Вариантов: %1$d | До: %2$s</string>
+    <string name="result_percent">%1$d%%</string>
+    <string name="user_full_name">%1$s %2$s</string>
 </resources>

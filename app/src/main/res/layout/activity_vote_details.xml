@@ -27,6 +27,7 @@
             android:id="@+id/burger"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:contentDescription="@string/profile"
             android:src="@drawable/burger"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +62,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/voteButton"
                 style="@style/BaseButton"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="500dp"
                 android:layout_gravity="center"
                 android:text="@string/vote" />
 
@@ -92,11 +93,11 @@
                     android:text="@string/delete_vote" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/resultsTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+        <TextView
+            android:id="@+id/resultsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
                 android:text="@string/results"
                 android:textColor="@color/blue_acsent"
                 android:textSize="20sp"
@@ -106,8 +107,15 @@
                 android:id="@+id/resultsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 android:orientation="vertical" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/returnToVotesButton"
+                style="@style/BaseButton"
+                android:layout_marginTop="500dp"
+                android:layout_gravity="center"
+                android:text="@string/return_to_votes"
+                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>

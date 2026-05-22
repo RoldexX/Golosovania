@@ -21,8 +21,9 @@
     <EditText
         android:id="@+id/EmailAddress"
         android:layout_marginTop="200dp"
+        android:autofillHints="username"
         android:hint="@string/login"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
         style="@style/BaseEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -32,6 +33,7 @@
     <EditText
         android:id="@+id/Password"
         android:layout_marginTop="20dp"
+        android:autofillHints="password"
         android:hint="@string/password"
         android:inputType="textPassword"
         style="@style/BaseEditText"

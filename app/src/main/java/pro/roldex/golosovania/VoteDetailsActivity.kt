@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
@@ -24,6 +25,7 @@ class VoteDetailsActivity : AppCompatActivity() {
     private var canManage: Boolean = false
     private var hasVoted: Boolean = false
     private var isClosed: Boolean = false
+    private var currentVoteTitle: String = ""
 
     private val editVoteLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -70,6 +72,10 @@ class VoteDetailsActivity : AppCompatActivity() {
             confirmDelete()
         }
 
+        binding.returnToVotesButton.setOnClickListener {
+            finish()
+        }
+
         binding.manageButtons.visibility = if (canManage) View.VISIBLE else View.GONE
         applyVoteState()
         loadVoteDetails()
@@ -84,7 +90,18 @@ class VoteDetailsActivity : AppCompatActivity() {
         val choicesVisibility = if (showResults) View.GONE else View.VISIBLE
         binding.choicesGroup.visibility = choicesVisibility
         binding.voteButton.visibility = choicesVisibility
-        binding.resultsTitle.visibility = if (showResults || canManage) View.VISIBLE else View.GONE
+        binding.returnToVotesButton.visibility = if (showResults) View.VISIBLE else View.GONE
+        binding.resultsTitle.visibility = View.GONE
+        if (showResults) {
+            binding.titleText.text = getString(R.string.results)
+            binding.subtitleText.text = currentVoteTitle
+            binding.subtitleText.textSize = 18f
+            binding.subtitleText.setTextColor(getColor(R.color.blue_acsent))
+            (binding.subtitleText.layoutParams as LinearLayout.LayoutParams).apply {
+                topMargin = dp(20)
+                bottomMargin = dp(14)
+            }
+        }
         if (!showResults && !canManage) {
             binding.resultsContainer.removeAllViews()
         }
@@ -100,10 +117,19 @@ class VoteDetailsActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         response.body()?.let { vote ->
                             isClosed = VoteUiFormatter.isClosed(vote.lastDate)
-                            binding.titleText.text = vote.title
-                            binding.subtitleText.text =
-                                VoteUiFormatter.detailsText(vote.lastDate, vote.choices.size)
+                            currentVoteTitle = vote.title
                             applyVoteState()
+                            if (!shouldShowResults()) {
+                                binding.titleText.text = vote.title
+                                binding.subtitleText.text =
+                                    VoteUiFormatter.detailsText(vote.lastDate, vote.choices.size)
+                                binding.subtitleText.textSize = 14f
+                                binding.subtitleText.setTextColor(getColor(R.color.blue_regular_hint))
+                                (binding.subtitleText.layoutParams as LinearLayout.LayoutParams).apply {
+                                    topMargin = 0
+                                    bottomMargin = 0
+                                }
+                            }
 
                             if (!shouldShowResults()) {
                                 renderChoices(vote.choices)
@@ -198,26 +224,40 @@ class VoteDetailsActivity : AppCompatActivity() {
     }
 
     private fun renderResults(results: VoteResultsResponse) {
-        binding.resultsTitle.visibility = View.VISIBLE
+        binding.resultsTitle.visibility = View.GONE
         binding.resultsContainer.removeAllViews()
 
-        val totalVotesView = TextView(this).apply {
-            text = getString(R.string.total_votes, results.totalVotes)
-            textSize = 16f
-            setTextColor(getColor(R.color.blue_regular_hint))
-        }
-        binding.resultsContainer.addView(totalVotesView)
-
         results.results.forEach { item ->
-            val row = TextView(this).apply {
-                text = "${item.title}: ${item.votesCount}"
+            val row = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(0, 14, 0, 0)
+            }
+
+            val titleView = TextView(this).apply {
+                text = item.title
                 textSize = 18f
                 setTextColor(getColor(R.color.blue_acsent))
                 gravity = Gravity.START
-                setPadding(0, 12, 0, 0)
             }
+            val percentView = TextView(this).apply {
+                text = getString(R.string.result_percent, calculatePercent(item.votesCount, results.totalVotes))
+                textSize = 14f
+                setTextColor(getColor(R.color.blue_regular_hint))
+                gravity = Gravity.START
+            }
+            row.addView(titleView)
+            row.addView(percentView)
             binding.resultsContainer.addView(row)
         }
+    }
+
+    private fun calculatePercent(votesCount: Long, totalVotes: Long): Int {
+        if (totalVotes == 0L) return 0
+        return ((votesCount * 100f) / totalVotes).toInt()
+    }
+
+    private fun dp(value: Int): Int {
+        return (value * resources.displayMetrics.density).toInt()
     }
 
     private fun confirmDelete() {

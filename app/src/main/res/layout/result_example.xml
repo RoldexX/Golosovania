@@ -9,6 +9,7 @@
         android:id="@+id/icon"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:contentDescription="@null"
         android:src="@drawable/gal_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +24,7 @@
         android:gravity="center"
         android:text="5/6"
         android:textColor="@color/black"
-        android:textSize="35dp"
+        android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/icon" />
@@ -46,7 +47,6 @@
             android:text="Попробовать снова"
             android:textColor="@color/text_color"
             android:textSize="18sp"
-            android:onClick="TryAgain"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -58,7 +58,6 @@
             android:background="@drawable/color_btn"
             android:fontFamily="@font/montserrat"
             android:text="Вернуться к тестам"
-            android:onClick="GoToTests"
             android:textColor="@color/text_color"
             android:layout_marginTop="20dp"
             android:textSize="18sp"

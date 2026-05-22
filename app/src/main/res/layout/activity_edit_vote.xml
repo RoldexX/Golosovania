@@ -24,6 +24,7 @@
             android:id="@+id/burger"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:contentDescription="@string/profile"
             android:src="@drawable/burger"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,6 +48,8 @@
                 style="@style/BaseEditText"
                 android:hint="@string/vote_title_hint"
                 android:gravity="start|center_vertical"
+                android:importantForAutofill="no"
+                android:inputType="textCapSentences"
                 android:paddingHorizontal="16dp" />
 
             <EditText
@@ -59,7 +62,8 @@
                 android:focusableInTouchMode="false"
                 android:gravity="start|center_vertical"
                 android:hint="@string/vote_date_hint"
-                android:inputType="none"
+                android:importantForAutofill="no"
+                android:inputType="datetime"
                 android:paddingHorizontal="16dp" />
 
             <androidx.appcompat.widget.AppCompatButton

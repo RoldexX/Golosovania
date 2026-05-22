@@ -42,6 +42,7 @@
         android:layout_width="45dp"
         android:layout_height="35dp"
         android:layout_marginStart="8dp"
+        android:contentDescription="@null"
         android:src="@drawable/gal_1" />
 
 </LinearLayout>

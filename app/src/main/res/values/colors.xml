@@ -6,6 +6,7 @@
     <color name="text_color">#EFEFF3FF</color>
     <color name="blue_acsent">#FF2F54C2</color>
     <color name="blue_regular_hint">#BB6480D3</color>
+    <color name="page_background">#F2F5FF</color>
     <color name="gray">#FFC9C9C9</color>
     <color name="red">#FFD36464</color>
 </resources>
