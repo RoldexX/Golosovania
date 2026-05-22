@@ -41,7 +41,8 @@ class CreateVoteActivity : AppCompatActivity() {
                 choices = listOf(
                     binding.choiceOneInput.text.toString().trim(),
                     binding.choiceTwoInput.text.toString().trim(),
-                    binding.choiceThreeInput.text.toString().trim()
+                    binding.choiceThreeInput.text.toString().trim(),
+                    binding.choiceFourInput.text.toString().trim()
                 ).filter { it.isNotBlank() }
             )
 

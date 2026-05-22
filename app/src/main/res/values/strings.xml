@@ -36,6 +36,7 @@
     <string name="choice_one">Вариант 1</string>
     <string name="choice_two">Вариант 2</string>
     <string name="choice_three_optional">Вариант 3 (необязательно)</string>
+    <string name="choice_four_optional">Вариант 4 (необязательно)</string>
     <string name="fill_all_fields">Заполните все поля</string>
     <string name="new_passwords_do_not_match">Новые пароли не совпадают</string>
     <string name="password_updated">Пароль обновлен</string>
