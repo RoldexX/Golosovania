@@ -104,6 +104,7 @@ class VoteDetailsActivity : AppCompatActivity() {
         binding.resultsTitle.visibility = View.GONE
         binding.resultsContainer.visibility = if (showResults) View.VISIBLE else View.GONE
         binding.subtitleText.visibility = if (showSuccess) View.GONE else View.VISIBLE
+        applyBottomActionsSpacing()
 
         if (showSuccess) {
             binding.titleText.text = currentVoteTitle
@@ -120,6 +121,15 @@ class VoteDetailsActivity : AppCompatActivity() {
         }
         if (!showSuccess && !showResults && !canManage) {
             binding.resultsContainer.removeAllViews()
+        }
+    }
+
+    private fun applyBottomActionsSpacing() {
+        (binding.manageButtons.layoutParams as LinearLayout.LayoutParams).apply {
+            topMargin = if (canManage) dp(360) else 0
+        }
+        (binding.returnToVotesButton.layoutParams as LinearLayout.LayoutParams).apply {
+            topMargin = if (canManage) dp(16) else dp(500)
         }
     }
 

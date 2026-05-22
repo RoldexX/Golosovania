@@ -68,33 +68,6 @@
                 android:text="@string/vote" />
 
             <LinearLayout
-                android:id="@+id/manageButtons"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/editVoteButton"
-                    style="@style/BaseButton"
-                    android:layout_width="0dp"
-                    android:layout_height="46dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    android:text="@string/edit_vote" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/deleteVoteButton"
-                    style="@style/BaseButton"
-                    android:layout_width="0dp"
-                    android:layout_height="46dp"
-                    android:layout_weight="1"
-                    android:text="@string/delete_vote" />
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/successContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -146,10 +119,37 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
+            <LinearLayout
+                android:id="@+id/manageButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="360dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/editVoteButton"
+                    style="@style/BaseButton"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/edit_vote" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/deleteVoteButton"
+                    style="@style/BaseButton"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:text="@string/delete_vote" />
+            </LinearLayout>
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/returnToVotesButton"
                 style="@style/BaseButton"
-                android:layout_marginTop="500dp"
+                android:layout_marginTop="16dp"
                 android:layout_gravity="center"
                 android:text="@string/return_to_votes"
                 android:visibility="gone" />
