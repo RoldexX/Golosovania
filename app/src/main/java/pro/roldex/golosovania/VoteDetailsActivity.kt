@@ -76,23 +76,39 @@ class VoteDetailsActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.successReturnButton.setOnClickListener {
+            finish()
+        }
+
         binding.manageButtons.visibility = if (canManage) View.VISIBLE else View.GONE
         applyVoteState()
         loadVoteDetails()
     }
 
     private fun shouldShowResults(): Boolean {
-        return hasVoted || isClosed || canManage
+        return isClosed || canManage
+    }
+
+    private fun shouldShowSuccess(): Boolean {
+        return hasVoted && !isClosed && !canManage
     }
 
     private fun applyVoteState() {
+        val showSuccess = shouldShowSuccess()
         val showResults = shouldShowResults()
-        val choicesVisibility = if (showResults) View.GONE else View.VISIBLE
+        val choicesVisibility = if (showSuccess || showResults) View.GONE else View.VISIBLE
         binding.choicesGroup.visibility = choicesVisibility
         binding.voteButton.visibility = choicesVisibility
+        binding.successContainer.visibility = if (showSuccess) View.VISIBLE else View.GONE
         binding.returnToVotesButton.visibility = if (showResults) View.VISIBLE else View.GONE
         binding.resultsTitle.visibility = View.GONE
-        if (showResults) {
+        binding.resultsContainer.visibility = if (showResults) View.VISIBLE else View.GONE
+        binding.subtitleText.visibility = if (showSuccess) View.GONE else View.VISIBLE
+
+        if (showSuccess) {
+            binding.titleText.text = currentVoteTitle
+            binding.resultsContainer.removeAllViews()
+        } else if (showResults) {
             binding.titleText.text = getString(R.string.results)
             binding.subtitleText.text = currentVoteTitle
             binding.subtitleText.textSize = 18f
@@ -102,7 +118,7 @@ class VoteDetailsActivity : AppCompatActivity() {
                 bottomMargin = dp(14)
             }
         }
-        if (!showResults && !canManage) {
+        if (!showSuccess && !showResults && !canManage) {
             binding.resultsContainer.removeAllViews()
         }
     }
@@ -119,10 +135,11 @@ class VoteDetailsActivity : AppCompatActivity() {
                             isClosed = VoteUiFormatter.isClosed(vote.lastDate)
                             currentVoteTitle = vote.title
                             applyVoteState()
-                            if (!shouldShowResults()) {
+                            if (!shouldShowSuccess() && !shouldShowResults()) {
                                 binding.titleText.text = vote.title
                                 binding.subtitleText.text =
                                     VoteUiFormatter.detailsText(vote.lastDate, vote.choices.size)
+                                binding.subtitleText.visibility = View.VISIBLE
                                 binding.subtitleText.textSize = 14f
                                 binding.subtitleText.setTextColor(getColor(R.color.blue_regular_hint))
                                 (binding.subtitleText.layoutParams as LinearLayout.LayoutParams).apply {
@@ -131,13 +148,13 @@ class VoteDetailsActivity : AppCompatActivity() {
                                 }
                             }
 
-                            if (!shouldShowResults()) {
+                            if (!shouldShowSuccess() && !shouldShowResults()) {
                                 renderChoices(vote.choices)
                             } else {
                                 binding.choicesGroup.removeAllViews()
                             }
 
-                            if (shouldShowResults() || canManage) {
+                            if (shouldShowResults()) {
                                 loadResults()
                             }
                         }
@@ -191,7 +208,6 @@ class VoteDetailsActivity : AppCompatActivity() {
                         toast(getString(R.string.vote_submitted))
                         hasVoted = true
                         applyVoteState()
-                        loadResults()
                     } else if (response.code() == 401) {
                         sessionManager.clearSession()
                         redirectToMain()

@@ -56,6 +56,7 @@
     <string name="registration_successful">Регистрация завершена</string>
     <string name="select_option">Выберите вариант</string>
     <string name="vote_submitted">Голос учтен</string>
+    <string name="vote_submitted_message">&#1042;&#1072;&#1096; &#1075;&#1086;&#1083;&#1086;&#1089; &#1091;&#1095;&#1090;&#1105;&#1085;!</string>
     <string name="total_votes">Всего голосов: %1$d</string>
     <string name="delete_vote_title">Удалить голосование</string>
     <string name="delete_vote_message">Удалить это голосование?</string>

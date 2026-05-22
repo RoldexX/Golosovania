@@ -36,6 +36,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
+        android:id="@+id/detailsScroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -93,11 +94,47 @@
                     android:text="@string/delete_vote" />
             </LinearLayout>
 
-        <TextView
-            android:id="@+id/resultsTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            <LinearLayout
+                android:id="@+id/successContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="88dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/successIcon"
+                    android:layout_marginTop="100dp"
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/gal_1" />
+
+                <TextView
+                    android:id="@+id/successMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center"
+                    android:text="@string/vote_submitted_message"
+                    android:textColor="@color/blue_acsent"
+                    android:textSize="25sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/successReturnButton"
+                    style="@style/BaseButton"
+                    android:layout_width="281dp"
+                    android:layout_marginTop="260dp"
+                    android:text="@string/return_to_votes" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/resultsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
                 android:text="@string/results"
                 android:textColor="@color/blue_acsent"
                 android:textSize="20sp"
